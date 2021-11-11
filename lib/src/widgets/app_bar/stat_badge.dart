@@ -21,9 +21,7 @@ abstract class StatBadge<T extends num> extends StatefulWidget {
   @required
   final StatValue<T> statValue;
 
-  const StatBadge(this.stat, this.statValue,
-      {this.flare, this.scale = 1, this.isWide})
-      : assert(statValue != null);
+  const StatBadge(this.stat, this.statValue, {this.flare, this.scale = 1, this.isWide}) : assert(statValue != null);
 
   /// This is intentionally abstract to allow deriving stats to specify
   /// when they should celebrate. N.B. that a value of 0 means to always
@@ -54,7 +52,7 @@ class StatBadgeState<T extends num> extends State<StatBadge<T>> {
   /// Since [widget.statValue] is [ValueListenable], we can subscribe to
   /// its changes in [didUpdateWidget].
   void valueChanged() {
-    T change = widget.statValue.number - _lastStatValue;
+    var change = widget.statValue.number - _lastStatValue;
     if (widget.celebrateAfter == 0 || change > widget.celebrateAfter) {
       controls.play('points');
       _lastStatValue = widget.statValue.number;
@@ -126,18 +124,12 @@ class _SlimStatData extends StatelessWidget {
       children: [
         ValueListenableBuilder(
           valueListenable: listenable,
-          builder: (context, String value, child) => Text(value,
-              style: buttonTextStyle.apply(
-                  color: Colors.white,
-                  fontSizeDelta: -2,
-                  fontSizeFactor: scale)),
+          builder: (context, String value, child) =>
+              Text(value, style: buttonTextStyle.apply(color: Colors.white, fontSizeDelta: -2, fontSizeFactor: scale)),
         ),
         Text(
           stat.toUpperCase(),
-          style: buttonTextStyle.apply(
-              color: Colors.white.withOpacity(0.5),
-              fontSizeDelta: -4,
-              fontSizeFactor: scale),
+          style: buttonTextStyle.apply(color: Colors.white.withOpacity(0.5), fontSizeDelta: -4, fontSizeFactor: scale),
         ),
       ],
     );
@@ -157,20 +149,14 @@ class _WideStatData extends StatelessWidget {
       children: [
         Text(
           stat.toUpperCase(),
-          style: buttonTextStyle.apply(
-              color: Colors.white.withOpacity(0.5),
-              fontSizeDelta: -4,
-              fontSizeFactor: scale),
+          style: buttonTextStyle.apply(color: Colors.white.withOpacity(0.5), fontSizeDelta: -4, fontSizeFactor: scale),
         ),
         const SizedBox(width: 15),
         Expanded(
           child: ValueListenableBuilder(
             valueListenable: listenable,
             builder: (context, String value, child) => Text(value,
-                style: buttonTextStyle.apply(
-                    color: Colors.white,
-                    fontSizeDelta: -1,
-                    fontSizeFactor: scale)),
+                style: buttonTextStyle.apply(color: Colors.white, fontSizeDelta: -1, fontSizeFactor: scale)),
           ),
         ),
         const SizedBox(width: 15),
