@@ -65,3 +65,24 @@ WARNING:
 You probably don't want to check the `*.tsv` output files into the repo. For that,
 run `git update-index --assume-unchanged test_driver/*.tsv` in the root dir. This is a one time
 command per machine.
+
+## Upgrade Log
+
+dart migrate
+
+
+flutter pub outdated --mode=null-safety
+Showing dependencies that are currently not opted in to null-safety.
+[✗] indicates versions without null safety support.
+[✓] indicates versions opting in to null safety.
+All your dependencies declare support for null-safety.
+
+
+Changed 7 constraints in pubspec.yaml:
+intl: any -> ^0.17.0
+provider: ^6.0.1 -> ^6.0.4
+cupertino_icons: ^1.0.4 -> ^1.0.5
+logging: ^1.0.2 -> ^1.1.0
+git: ^2.0.0 -> ^2.2.0
+test: ^1.19.3 -> ^1.21.4
+test_api: ^0.4.2 -> ^0.4.12
