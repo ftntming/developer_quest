@@ -191,12 +191,12 @@ class _GameOverScreen extends StatelessWidget {
                     style: chompTextStyle.apply(fontSizeDelta: 26),
                   ),
                   const SizedBox(height: 30),
-                  FlatButton(
+                  TextButton(
                     onPressed: () => Navigator.pop(context, null),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 10),
-                    color: const Color.fromRGBO(27, 26, 68, 1),
-                    shape: Border.all(width: 1, color: chompBlue),
+                    // padding: const EdgeInsets.symmetric(
+                    //     horizontal: 40, vertical: 10),
+                    // color: const Color.fromRGBO(27, 26, 68, 1),
+                    // shape: Border.all(width: 1, color: chompBlue),
                     child: Text(
                       'CONTINUE',
                       style: chompTextStyle.apply(fontSizeDelta: 8),

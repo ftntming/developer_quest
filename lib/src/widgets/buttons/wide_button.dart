@@ -37,18 +37,18 @@ class WideButton extends StatelessWidget {
               ],
             )
           : null,
-      child: FlatButton(
+      child: TextButton(
           key: buttonKey,
-          padding: EdgeInsets.only(
-              left: 20 + paddingTweak.left,
-              right: 20 + paddingTweak.right,
-              top: 11 + paddingTweak.top,
-              bottom: 11 + paddingTweak.bottom),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(9),
-          ),
+          // padding: EdgeInsets.only(
+          //     left: 20 + paddingTweak.left,
+          //     right: 20 + paddingTweak.right,
+          //     top: 11 + paddingTweak.top,
+          //     bottom: 11 + paddingTweak.bottom),
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(9),
+          // ),
           onPressed: enabled ? onPressed : null,
-          color: background,
+          // color: background,
           child: child),
     );
   }

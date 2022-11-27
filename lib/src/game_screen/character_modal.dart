@@ -89,10 +89,10 @@ class CharacterImage extends StatelessWidget {
               alignment: Alignment.topRight,
               child: ButtonTheme(
                 minWidth: 0,
-                child: FlatButton(
+                child: TextButton(
                   key: const ValueKey('close-character-modal'),
-                  padding: const EdgeInsets.all(0),
-                  shape: null,
+                  // padding: const EdgeInsets.all(0),
+                  // shape: null,
                   onPressed: () => Navigator.pop(context, null),
                   child: const Icon(
                     Icons.cancel,

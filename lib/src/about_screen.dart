@@ -24,9 +24,9 @@ class AboutScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: ButtonTheme(
                   minWidth: 0,
-                  child: FlatButton(
-                    padding: const EdgeInsets.all(0),
-                    shape: null,
+                  child: TextButton(
+                    // padding: const EdgeInsets.all(0),
+                    // shape: null,
                     onPressed: () => Navigator.pop(context, null),
                     child: const Icon(
                       Icons.arrow_back,

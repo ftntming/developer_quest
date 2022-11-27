@@ -190,9 +190,9 @@ class ProceedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AbsorbPointer(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () {},
-        color: Colors.black,
+        // color: Colors.black,
         child: Text(
           text,
           style: const TextStyle(

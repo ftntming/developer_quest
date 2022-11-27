@@ -12,7 +12,7 @@ void main() {
         create: (_) => World(),
         child: MaterialApp(
           home: Consumer<World>(
-            builder: (context, world, child) => FlatButton(
+            builder: (context, world, child) => TextButton(
               key: buttonKey,
               onPressed: () => world.start(),
               child: Text(world.isRunning ? 'Stop' : 'Start'),
