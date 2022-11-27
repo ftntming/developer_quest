@@ -21,8 +21,7 @@ class TaskPoolPage extends StatelessWidget {
 
   /// Builds a section of the task list with [title] and a list of [workItems].
   /// This returns slivers to be used in a [SliverList].
-  void _buildSection(List<Widget> slivers, String title, double scale,
-      List<WorkItem> workItems) {
+  void _buildSection(List<Widget> slivers, String title, double scale, List<WorkItem> workItems) {
     if (workItems.isNotEmpty) {
       slivers.add(SliverPersistentHeader(
         pinned: false,
@@ -31,8 +30,8 @@ class TaskPoolPage extends StatelessWidget {
       slivers.add(SliverList(
         delegate: SliverChildBuilderDelegate((context, index) {
           WorkItem item = workItems[index];
-          return ChangeNotifierProvider<WorkItem>.value(
-            notifier: item,
+          return ChangeNotifierProvider(
+            create: (_) => item,
             key: ValueKey(item),
             child: item is Bug ? BugListItem() : TaskListItem(),
           );
@@ -54,8 +53,7 @@ class TaskPoolPage extends StatelessWidget {
             var slivers = <Widget>[];
 
             // Add the header only if we show the in progress tasks.
-            if (display == TaskPoolDisplay.all ||
-                display == TaskPoolDisplay.inProgress) {
+            if (display == TaskPoolDisplay.all || display == TaskPoolDisplay.inProgress) {
               slivers.add(
                 SliverPersistentHeader(
                   pinned: false,
@@ -65,15 +63,9 @@ class TaskPoolPage extends StatelessWidget {
               _buildSection(slivers, 'IN PROGRESS', scale, taskPool.workItems);
             }
 
-            if (display == TaskPoolDisplay.all ||
-                display == TaskPoolDisplay.completed) {
-              _buildSection(
-                  slivers,
-                  'COMPLETED',
-                  scale,
-                  taskPool.completedTasks
-                      .followedBy(taskPool.archivedTasks)
-                      .toList(growable: false));
+            if (display == TaskPoolDisplay.all || display == TaskPoolDisplay.completed) {
+              _buildSection(slivers, 'COMPLETED', scale,
+                  taskPool.completedTasks.followedBy(taskPool.archivedTasks).toList(growable: false));
             }
             return CustomScrollView(slivers: slivers);
           },

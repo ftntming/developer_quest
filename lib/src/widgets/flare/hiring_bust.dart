@@ -1,14 +1,15 @@
 import 'dart:math';
 
+import 'package:dev_rpg/src/style.dart';
 import 'package:dev_rpg/src/widgets/flare/desaturated_actor.dart';
 import 'package:dev_rpg/src/widgets/flare/hiring_particles.dart';
-import 'package:dev_rpg/src/style.dart';
+import 'package:flare_flutter/base/math/aabb.dart';
 import 'package:flare_flutter/flare.dart';
+import 'package:flare_flutter/flare_render_box.dart';
+import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flare_dart/math/mat2d.dart';
-import 'package:flare_dart/math/aabb.dart';
-import 'package:flare_flutter/flare_render_box.dart';
+import 'package:flutter/services.dart';
 
 /// The HiringBust displays three different visual states.
 /// [locked] is for when the character is not available for hire,
@@ -38,7 +39,6 @@ class HiringBust extends LeafRenderObjectWidget {
   RenderObject createRenderObject(BuildContext context) {
     return HiringBustRenderObject()
       ..particleColor = particleColor
-      ..assetBundle = DefaultAssetBundle.of(context)
       ..filename = filename
       ..fit = fit
       ..alignment = alignment
@@ -48,11 +48,9 @@ class HiringBust extends LeafRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant HiringBustRenderObject renderObject) {
+  void updateRenderObject(BuildContext context, covariant HiringBustRenderObject renderObject) {
     renderObject
       ..particleColor = particleColor
-      ..assetBundle = DefaultAssetBundle.of(context)
       ..filename = filename
       ..fit = fit
       ..hiringState = hiringState
@@ -126,8 +124,7 @@ class HiringBustRenderObject extends FlareRenderBox {
       }
     }
 
-    _actor?.desaturate = _hiringState == HiringBustState.locked ||
-        _hiringState == HiringBustState.available;
+    _actor?.desaturate = _hiringState == HiringBustState.locked || _hiringState == HiringBustState.available;
     advance(0);
     markNeedsPaint();
   }
@@ -150,8 +147,7 @@ class HiringBustRenderObject extends FlareRenderBox {
   @override
   void performLayout() {
     super.performLayout();
-    _particles?.particleSize =
-        (size.width / idealCharacterWidth) * idealParticleSize;
+    _particles?.particleSize = (size.width / idealCharacterWidth) * idealParticleSize;
   }
 
   /// Provide the correct bounding box for the content we want to draw
@@ -170,8 +166,7 @@ class HiringBustRenderObject extends FlareRenderBox {
     double shadowDiameter = shadowWidth;
 
     canvas.drawOval(
-        Offset(offset.dx + size.width / 2 - shadowDiameter / 2,
-                offset.dy + size.height - shadowHeight) &
+        Offset(offset.dx + size.width / 2 - shadowDiameter / 2, offset.dy + size.height - shadowHeight) &
             Size(shadowDiameter, shadowHeight),
         Paint()
           ..color = _hiringState == HiringBustState.available
@@ -182,8 +177,7 @@ class HiringBustRenderObject extends FlareRenderBox {
     canvas.translate(0, -shadowHeight / 1.5);
     Path clip = Path();
     double clipDiameter = min(size.width, size.height);
-    clip.addOval(Offset(offset.dx + size.width / 2 - clipDiameter / 2,
-            offset.dy + size.height / 2 - clipDiameter / 2) &
+    clip.addOval(Offset(offset.dx + size.width / 2 - clipDiameter / 2, offset.dy + size.height / 2 - clipDiameter / 2) &
         Size(clipDiameter, clipDiameter));
 
     // There's something about using a large clipping area that seems to
@@ -203,8 +197,7 @@ class HiringBustRenderObject extends FlareRenderBox {
   /// is back in widget transform space.
   @override
   void postPaint(Canvas canvas, Offset offset) {
-    _particles?.paint(canvas,
-        offset + Offset((size.width - shadowWidth) / 2, -shadowHeight / 2));
+    _particles?.paint(canvas, offset + Offset((size.width - shadowWidth) / 2, -shadowHeight / 2));
   }
 
   String get filename => _filename;
@@ -220,7 +213,7 @@ class HiringBustRenderObject extends FlareRenderBox {
   /// to the implementation, so we need to load our content here.
   @override
   Future<void> load() async {
-    FlutterActor actor = await loadFlare(_filename);
+    FlutterActor actor = await loadFlare(AssetFlare(bundle: rootBundle, name: _filename));
     if (actor == null) {
       return;
     }

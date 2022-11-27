@@ -1,5 +1,4 @@
 import 'package:dev_rpg/src/shared_state/game/world.dart';
-import 'package:flare_dart/math/mat2d.dart';
 import 'package:flare_flutter/flare.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controller.dart';
@@ -8,13 +7,7 @@ import 'package:flutter/material.dart';
 import '../style.dart';
 import 'buttons/wide_button.dart';
 
-var _starGreeting = [
-  'You tried.',
-  'Solid effort!',
-  'Delightful!',
-  'Spectacular!!',
-  'PERFECTION!!!'
-];
+var _starGreeting = ['You tried.', 'Solid effort!', 'Delightful!', 'Spectacular!!', 'PERFECTION!!!'];
 
 /// A super simple Flare Controller that mixes the star value
 /// animation on top of our Build animation
@@ -47,8 +40,7 @@ class _GameOverState extends State<GameOver> {
   _MixStarValueController _starController;
   @override
   void initState() {
-    _starController =
-        _MixStarValueController(widget.world.company.starRating + 1);
+    _starController = _MixStarValueController(widget.world.company.starRating + 1);
     super.initState();
   }
 
@@ -82,10 +74,7 @@ class _GameOverState extends State<GameOver> {
               constraints: const BoxConstraints(minWidth: double.infinity),
               decoration: BoxDecoration(
                 boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      offset: const Offset(0, 100),
-                      blurRadius: 100),
+                  BoxShadow(color: Colors.black.withOpacity(0.5), offset: const Offset(0, 100), blurRadius: 100),
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
@@ -104,7 +93,9 @@ class _GameOverState extends State<GameOver> {
                         child: FlareActor('assets/flare/Joy.flr',
                             animation: stars < 2
                                 ? 'sad'
-                                : stars < 3 ? 'neutral' : 'happy'),
+                                : stars < 3
+                                    ? 'neutral'
+                                    : 'happy'),
                       ),
                     ),
                   ),
@@ -129,24 +120,16 @@ class _GameOverState extends State<GameOver> {
                         children: [
                           const TextSpan(text: 'Your ', style: contentStyle),
                           primaryCharacteristic,
-                          const TextSpan(
-                              text: ' app with ', style: contentStyle),
+                          const TextSpan(text: ' app with ', style: contentStyle),
                           secondaryCharacteristic,
-                          const TextSpan(
-                              text: ' shipped to ', style: contentStyle),
+                          const TextSpan(text: ' shipped to ', style: contentStyle),
                           TextSpan(
                               text: '${widget.world.company.users.value} users',
-                              style: contentStyle.apply(
-                                  fontFamily: 'MontserratBold')),
-                          const TextSpan(
-                              text: ' and was rated ', style: contentStyle),
+                              style: contentStyle.apply(fontFamily: 'MontserratBold')),
+                          const TextSpan(text: ' and was rated ', style: contentStyle),
                           TextSpan(
-                              text: '${stars + 1}/5 stars',
-                              style: contentStyle.apply(
-                                  fontFamily: 'MontserratBold')),
-                          const TextSpan(
-                              text: ' by ItsAllWidgets Magazine!',
-                              style: contentStyle),
+                              text: '${stars + 1}/5 stars', style: contentStyle.apply(fontFamily: 'MontserratBold')),
+                          const TextSpan(text: ' by ItsAllWidgets Magazine!', style: contentStyle),
                         ],
                       ),
                     ),
@@ -161,8 +144,7 @@ class _GameOverState extends State<GameOver> {
                             onPressed: _backToMainMenu,
                             paddingTweak: const EdgeInsets.only(right: -7),
                             background: const Color.fromRGBO(84, 114, 239, 1),
-                            shadowColor:
-                                const Color.fromRGBO(84, 114, 244, 0.25),
+                            shadowColor: const Color.fromRGBO(84, 114, 244, 0.25),
                             child: Text(
                               'MAIN MENU',
                               style: buttonTextStyle.apply(color: Colors.white),
@@ -175,8 +157,7 @@ class _GameOverState extends State<GameOver> {
                             onPressed: () => _playAgain(context),
                             paddingTweak: const EdgeInsets.only(right: -7),
                             background: const Color.fromRGBO(236, 41, 117, 1),
-                            shadowColor:
-                                const Color.fromRGBO(244, 84, 84, 0.25),
+                            shadowColor: const Color.fromRGBO(244, 84, 84, 0.25),
                             child: Text(
                               'PLAY AGAIN',
                               style: buttonTextStyle.apply(color: Colors.white),
@@ -199,14 +180,11 @@ class _GameOverState extends State<GameOver> {
     for (final task in widget.world.taskPool.archivedTasks) {
       switch (task.name) {
         case 'Green Theme':
-          return TextSpan(
-              text: 'green 🎨', style: contentStyle.apply(color: Colors.green));
+          return TextSpan(text: 'green 🎨', style: contentStyle.apply(color: Colors.green));
         case 'Red Theme':
-          return TextSpan(
-              text: 'red 🎨', style: contentStyle.apply(color: Colors.red));
+          return TextSpan(text: 'red 🎨', style: contentStyle.apply(color: Colors.red));
         case 'Blue Theme':
-          return TextSpan(
-              text: 'blue 🎨', style: contentStyle.apply(color: Colors.blue));
+          return TextSpan(text: 'blue 🎨', style: contentStyle.apply(color: Colors.blue));
       }
     }
     return const TextSpan(text: 'basic 😶', style: contentStyle);
@@ -216,8 +194,7 @@ class _GameOverState extends State<GameOver> {
     for (final task in widget.world.taskPool.archivedTasks) {
       switch (task.name) {
         case 'Dinosaur Mascot & Icon':
-          return const TextSpan(
-              text: 'dinosaur 🦖 mascot', style: contentStyle);
+          return const TextSpan(text: 'dinosaur 🦖 mascot', style: contentStyle);
         case 'Bird Mascot & Icon':
           return const TextSpan(text: 'bird 🐦 mascot', style: contentStyle);
         case 'Cat Mascot & Icon':
@@ -227,8 +204,7 @@ class _GameOverState extends State<GameOver> {
         case 'Sci-Fi Design':
           return const TextSpan(text: 'sci-fi 👽 design', style: contentStyle);
         case 'Mainstream Design':
-          return const TextSpan(
-              text: 'mainstream 💻 design', style: contentStyle);
+          return const TextSpan(text: 'mainstream 💻 design', style: contentStyle);
       }
     }
     return const TextSpan(text: 'simple 😐 design', style: contentStyle);

@@ -22,24 +22,19 @@ class CharacterPoolPage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15, right: 15, bottom: 128),
           itemCount: characterPool.children.length,
           gridDelegate: _gridStructure,
-          itemBuilder: (context, index) =>
-              ChangeNotifierProvider<Character>.value(
-                notifier: characterPool.children[index],
-                key: ValueKey(characterPool.children[index]),
-                child: CharacterListItem(),
-              ),
+          itemBuilder: (context, index) => ChangeNotifierProvider<Character>(
+            create: (_) => characterPool.children[index],
+            key: ValueKey(characterPool.children[index]),
+            child: CharacterListItem(),
+          ),
         ),
         _fadeOverlay,
       ],
     );
   }
 
-  SliverGridDelegate get _gridStructure =>
-      SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: numColumns,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 15,
-          childAspectRatio: 0.65);
+  SliverGridDelegate get _gridStructure => SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: numColumns, mainAxisSpacing: 0, crossAxisSpacing: 15, childAspectRatio: 0.65);
 
   Widget get _fadeOverlay {
     return Positioned.fill(
@@ -54,10 +49,7 @@ class CharacterPoolPage extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromRGBO(59, 59, 73, 0),
-                  Color.fromRGBO(59, 59, 73, 1)
-                ],
+                colors: [Color.fromRGBO(59, 59, 73, 0), Color.fromRGBO(59, 59, 73, 1)],
                 stops: [0, 1],
               ),
             ),
@@ -123,16 +115,15 @@ class CharacterDisplay extends StatelessWidget {
     );
   }
 
-  RoundedRectangleBorder get _inkWellBorder =>
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
+  RoundedRectangleBorder get _inkWellBorder => RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
 
   void _showModal(BuildContext context) {
     var character = Provider.of<Character>(context);
     showDialog<void>(
         context: context,
         builder: (BuildContext context) {
-          return ChangeNotifierProvider<Character>.value(
-            notifier: character,
+          return ChangeNotifierProvider(
+            create: (_) => character,
             child: CharacterModal(),
           );
         });
@@ -157,13 +148,8 @@ class HiringInformation extends StatelessWidget {
             children: [
               character.isHired
                   ? Container()
-                  : Icon(
-                      bustState == HiringBustState.available
-                          ? Icons.add_circle
-                          : Icons.lock,
-                      color: !character.isHired && character.canUpgradeOrHire
-                          ? attentionColor
-                          : Colors.white),
+                  : Icon(bustState == HiringBustState.available ? Icons.add_circle : Icons.lock,
+                      color: !character.isHired && character.canUpgradeOrHire ? attentionColor : Colors.white),
               const SizedBox(width: 4),
               Text(
                 bustState == HiringBustState.hired
@@ -173,9 +159,7 @@ class HiringInformation extends StatelessWidget {
                         : 'Locked',
                 style: contentStyle.apply(
                     fontSizeFactor: textScale,
-                    color: bustState == HiringBustState.available
-                        ? attentionColor
-                        : Colors.white),
+                    color: bustState == HiringBustState.available ? attentionColor : Colors.white),
               )
             ],
           ),

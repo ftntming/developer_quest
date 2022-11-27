@@ -101,7 +101,7 @@ Future<void> _save(Timeline timeline) async {
   var gitSha = '';
   if (await GitDir.isGitDir('.')) {
     var gitDir = await GitDir.fromExisting('.');
-    var branch = await gitDir.getCurrentBranch();
+    var branch = await gitDir.currentBranch();
     gitSha = branch.sha.substring(0, 8);
   }
 
@@ -114,16 +114,14 @@ Future<void> _save(Timeline timeline) async {
   await summary.writeSummaryToFile(filename, pretty: true);
   await summary.writeTimelineToFile(filename);
 
-  var rasterizerTimes =
-      summary.summaryJson['frame_rasterizer_times'] as List<int>;
+  var rasterizerTimes = summary.summaryJson['frame_rasterizer_times'] as List<int>;
   var buildTimes = summary.summaryJson['frame_build_times'] as List<int>;
   var buildTimesStat = Statistic.from(
     buildTimes,
     name: id,
   );
   var additional = parse(timeline, summary);
-  var frameRequestStats = Statistic.from(
-      additional.frameRequestDurations.map((d) => d.inMicroseconds));
+  var frameRequestStats = Statistic.from(additional.frameRequestDurations.map((d) => d.inMicroseconds));
 
   IOSink stats;
   try {
@@ -172,17 +170,11 @@ Future<void> _save(Timeline timeline) async {
 
   IOSink durations;
   try {
-    durations =
-        File('test_driver/durations.tsv').openWrite(mode: FileMode.append);
-    var length = [
-      buildTimes.length,
-      rasterizerTimes.length,
-      additional.frameRequestDurations.length
-    ].fold(0, max);
+    durations = File('test_driver/durations.tsv').openWrite(mode: FileMode.append);
+    var length = [buildTimes.length, rasterizerTimes.length, additional.frameRequestDurations.length].fold(0, max);
     for (int i = 0; i < length; i++) {
       var build = i < buildTimes.length ? buildTimes[i].toString() : '';
-      var rasterizer =
-          i < rasterizerTimes.length ? rasterizerTimes[i].toString() : '';
+      var rasterizer = i < rasterizerTimes.length ? rasterizerTimes[i].toString() : '';
       var frameRequest = i < additional.frameRequestDurations.length
           ? additional.frameRequestDurations[i].inMicroseconds.toString()
           : '';
